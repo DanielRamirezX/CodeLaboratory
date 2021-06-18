@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-11-02T17:36:25+01:00",
+  "id": "GPEX01",
+  "duration": 30,
+  "title": "GPEX01 - Crear nuestro primer proyecto Maven con IntelliJ IDEA",
+  "authors": "TechU",
+  "summary": "Crear nuestro primer proyecto Maven con IntelliJ IDEA",
+  "source": ".\\GPEX01 - Crear nuestro primer proyecto Maven con IntelliJ IDEA.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "proyectos"
+  ],
+  "tags": [
+    "back"
+  ],
+  "feedback": "http://bbva-techuniversity.appspot.com/",
+  "url": "GPEX01"
+}

@@ -1,0 +1,108 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>HTEX02 - Adición de estilos a formulario elaborado en HTEX01</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="HTEX02"
+                  title="HTEX02 - Adición de estilos a formulario elaborado en HTEX01"
+                  environment="web"
+                  feedback-link="http://bbva-techuniversity.appspot.com/">
+    
+      <google-codelab-step label="Overview" duration="15">
+        <h2 is-upgraded>HTEX02 - Adición de estilos a formulario elaborado en HTEX01</h2>
+<p> Partiremos de la página realizada en el ejercicio anterior.  &#34;`html &lt;!doctype html&gt;     </p>
+<pre><code>&lt;title&gt;This is a test&lt;/title&gt;
+&lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;
+&lt;form&gt;
+	&lt;label&gt;Nombre&lt;/label&gt;
+  &lt;input id=&#34;formNombre&#34; type=&#34;text&#34; required placeholder=&#34;Nombre&#34; /&gt;
+  &lt;br /&gt;
+	&lt;label&gt;Email&lt;/label&gt;
+	&lt;input id=&#34;formEmail&#34; type=&#34;email&#34; placeholder=&#34;email&#34; /&gt;
+	&lt;br /&gt;
+	&lt;label&gt;Edad&lt;/label&gt;
+	&lt;input id=&#34;formAge&#34; min=&#34;18&#34; max=&#34;99&#34; type=&#34;number&#34;/&gt;
+	&lt;br /&gt;		
+  &lt;button&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>En el código de la página utilizamos las <strong>etiquetas</strong> HTML para indicar la maquetación de la página.</p>
+<p>Se pueden añadir, como hemos visto, atributos id a los elementos.</p>
+<p>Además, también se puede añadir el atributo **class**, que puede contener uno o varios valores, que sirvan para luego <strong>seleccionar</strong> ese elemento y aplicarle estilos.</p>
+<p>Por ejemplo, un input de texto con id y class.</p>
+<p>CSS nos permite aplicar estilos al HTML de una página, pudiendo cambiar por ejemplo el color de una tipografía, su tamaño o centrar un componente.</p>
+<p>Para aplicar estos estilos necesitamos alguna forma de poder <strong>seleccionar</strong> a qué partes del HTML aplicarlos y ahí es donde entran los <strong>selectores</strong> CSS, que utilizarán los mecanismos que acabamos de ver antes.</p>
+<p>Si queremos seleccionar en base a una <strong>etiqueta HTML</strong> lo haríamos tal que:</p>
+<pre><code>input {   } </code></pre>
+<p>Si queremos seleccionar en base a una <strong>id</strong> lo haríamos tal que:</p>
+<pre><code>#formNombre {   } </code></pre>
+<p>Si queremos seleccionar en base a una <strong>clase</strong> lo haríamos tal que:</p>
+<pre><code>.centrado {   } </code></pre>
+<p>Los selectores se pueden <strong>combinar</strong> de varias formas:</p>
+<pre><code>input .centrado {   }</code></pre>
+<p>Vamos a ver los selectores en un ejemplo.</p>
+<p>El objetivo será poner la tipografía de cada uno de los 3 inputs que tenemos en nuestro formulario de un color distinto, utilizando distintos selectores.</p>
+<p>Para cambiar el color de la tipografía usaremos la propiedad <strong>color</strong>.</p>
+<p>Con este selector, pondremos el texto de todos los inputs en rojo (podríamos poner solo input también).</p>
+<pre><code>form input {   color: red; } </code></pre>
+<p>Ahora añadimos a un input, por ejemplo el email, la clase &#34;green&#34;.</p>
+Y CSS apropiado para seleccionar el HTML que tenga la clase &#34;green&#34; y poner el color de su tipografía verde.</p>
+<pre><code>css .green {   color: green; } </code></pre>
+<p>Por último, usaremos una de las id, la del input de texto del nombre por ejemplo, para seleccionarlo y poner el color de su tipografía azul.</p>
+<pre><code>formNombre { 
+  color: blue; } </code></pre>
+<p>Y así nos quedaría cada input con el texto que contiene de un color distinto. El HTML sería:</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;title&gt;This is a test&lt;/title&gt;
+&lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;
+&lt;form&gt;
+	&lt;label&gt;Nombre&lt;/label&gt;
+    &lt;input id=&#34;formNombre&#34; type=&#34;text&#34; required placeholder=&#34;Nombre&#34; /&gt;
+    &lt;br /&gt;
+	&lt;label&gt;Email&lt;/label&gt;
+	&lt;input id=&#34;formEmail&#34; class=&#34;green&#34; type=&#34;email&#34; placeholder=&#34;email&#34; /&gt;
+	&lt;br /&gt;
+	&lt;label&gt;Edad&lt;/label&gt;
+	&lt;input id=&#34;formAge&#34; min=&#34;18&#34; max=&#34;99&#34; type=&#34;number&#34;/&gt;
+	&lt;br /&gt;		
+    &lt;button&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>Y el CSS</p>
+<pre><code>form input { color: red; }  
+  .green { color: green; }
+  formNombre { color: blue; }</code></pre>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+    <script src="//support.google.com/inapp/api.js"></script><script src="/practitioner/scripts/done.js"></script>
+  <script src="../../scripts/done.js"></script>
+
+</body>
+</html>

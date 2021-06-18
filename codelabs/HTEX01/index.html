@@ -1,0 +1,148 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>HTEX01 - Formulario con etiquetas HTML5 - placeholder, required</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="HTEX01"
+                  title="HTEX01 - Formulario con etiquetas HTML5 - placeholder, required"
+                  environment="web"
+                  feedback-link="http://bbva-techuniversity.appspot.com/">
+    
+      <google-codelab-step label="Overview" duration="30">
+        <h2 is-upgraded>HTEX01 - Formulario con etiquetas HTML5 - placeholder, required</h2>
+<p> Vamos a crear una página básica HTML en la que probaremos etiquetas y atributos  de interés.  El ejercicio se puede hacer en la página <a href="https://jsfiddle.net/">JSFiddle</a></p>
+<p>Empezaremos creando la página HTML tal que:  </p>
+<pre><code>&lt;!doctype html&gt;
+&lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;
+</code></pre>
+<p>Añadimos un título a la página. </p>
+<p>Añadimos también un formulario y un input de texto, al que añadimos una id para identificarlo.</p>
+<p>Completamos el formulario añadiendo un botón para enviarlo.</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;title&gt;This is a test&lt;/title&gt;
+&lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;
+&lt;form&gt;
+  &lt;input id=&#34;formNombre&#34; type=&#34;text&#34;/&gt;
+  &lt;br /&gt;
+  &lt;button&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>En este punto podemos comprobar que, si le damos al botón enviar, se envía el formulario, tenga o no valor el input de texto.</p>
+<p>Si añadimos al input del formulario el atributo <strong>required</strong>, no podremos enviarlo a no ser que le demos un valor.</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;title&gt;This is a test&lt;/title&gt;
+&lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;
+&lt;form&gt;
+  &lt;input id=&#34;formNombre&#34; type=&#34;text&#34; required /&gt;
+  &lt;br /&gt;
+  &lt;button&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>El atributo <strong>placeholder</strong> nos ayuda a identificar qué ha de contener un input de texto.</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;title&gt;This is a test&lt;/title&gt;
+&lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;
+&lt;form&gt;
+  &lt;input id=&#34;formNombre&#34; type=&#34;text&#34; required placeholder=&#34;Nombre&#34; /&gt;
+  &lt;br /&gt;
+  &lt;button&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>Hay tipos de input más específicos, como por ejemplo email, que añaden una validación previa al envío, comprobando que el contenido cumpla un patrón predeterminado.</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;title&gt;This is a test&lt;/title&gt;
+&lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;
+&lt;form&gt;
+  &lt;input id=&#34;formNombre&#34; type=&#34;text&#34; required placeholder=&#34;Nombre&#34; /&gt;
+  &lt;br /&gt;
+	&lt;input id=&#34;formEmail&#34; type=&#34;email&#34; placeholder=&#34;email&#34; /&gt;
+	&lt;br /&gt;
+  &lt;button&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>Existe también el input de tipo <strong>number</strong> que cuenta con atributos específicos, min y max, para delimitar los números permitidos.</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;title&gt;This is a test&lt;/title&gt;
+&lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;
+&lt;form&gt;
+  &lt;input id=&#34;formNombre&#34; type=&#34;text&#34; required placeholder=&#34;Nombre&#34; /&gt;
+  &lt;br /&gt;
+	&lt;input id=&#34;formEmail&#34; type=&#34;email&#34; placeholder=&#34;email&#34; /&gt;
+	&lt;br /&gt;
+	&lt;input id=&#34;formAge&#34; min=&#34;18&#34; max=&#34;99&#34; type=&#34;number&#34;/&gt;
+	&lt;br /&gt;
+  &lt;button&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>También podemos añadir etiquetas a los input para mejorar su usabilidad.</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;title&gt;This is a test&lt;/title&gt;
+&lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;
+&lt;form&gt;
+	&lt;label&gt;Nombre&lt;/label&gt;
+  &lt;input id=&#34;formNombre&#34; type=&#34;text&#34; required placeholder=&#34;Nombre&#34; /&gt;
+  &lt;br /&gt;
+	&lt;label&gt;Email&lt;/label&gt;
+	&lt;input id=&#34;formEmail&#34; type=&#34;email&#34; placeholder=&#34;email&#34; /&gt;
+	&lt;br /&gt;
+	&lt;label&gt;Edad&lt;/label&gt;
+	&lt;input id=&#34;formAge&#34; min=&#34;18&#34; max=&#34;99&#34; type=&#34;number&#34;/&gt;
+	&lt;br /&gt;
+  &lt;button&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>Existen más tipos de input, como por ejemplo <strong>date</strong> y <strong>color</strong></p>
+<pre><code>&lt;!doctype html&gt;
+&lt;title&gt;This is a test&lt;/title&gt;
+&lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;
+&lt;form&gt;
+  &lt;label&gt;Nombre&lt;/label&gt;
+  &lt;input id=&#34;formNombre&#34; type=&#34;text&#34; required placeholder=&#34;Nombre&#34; /&gt;
+  &lt;br /&gt;
+	&lt;label&gt;Email&lt;/label&gt;
+	&lt;input id=&#34;formEmail&#34; type=&#34;email&#34; placeholder=&#34;email&#34; /&gt;
+	&lt;br /&gt;
+	&lt;label&gt;Edad&lt;/label&gt;
+	&lt;input id=&#34;formAge&#34; min=&#34;18&#34; max=&#34;99&#34; type=&#34;number&#34;/&gt;
+	&lt;br /&gt;
+	&lt;input id=&#34;formDate&#34; type=&#34;date&#34;/&gt;
+	&lt;br /&gt;
+	&lt;input id=&#34;formColor&#34; type=&#34;color&#34;/&gt;
+	&lt;br /&gt;
+  &lt;button&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+    <script src="//support.google.com/inapp/api.js"></script><script src="/practitioner/scripts/done.js"></script>
+  <script src="../../scripts/done.js"></script>
+
+</body>
+</html>

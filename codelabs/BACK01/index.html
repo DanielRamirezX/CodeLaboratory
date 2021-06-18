@@ -1,0 +1,136 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>BACK01 - API REST con integración de métodos GET, POST, PUT, DELETE y PATCH y control de respuestas HTTP</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="BACK01"
+                  title="BACK01 - API REST con integración de métodos GET, POST, PUT, DELETE y PATCH y control de respuestas HTTP"
+                  environment="web"
+                  feedback-link="http://bbva-techuniversity.appspot.com/">
+    
+      <google-codelab-step label="Overview" duration="10">
+        <h2 is-upgraded>BACK01 - API REST con integración de métodos GET, POST, PUT, DELETE y PATCH y control de respuestas HTTP</h2>
+<p>El siguiente Codelab integra todas las operaciones HTTP implementadas anteriormente y veremos como manejar la respuesta HTTP de los servicios mediante <strong>ResponseEntity</strong>. En ciertas circunstancias se necesita enviar respuestas HTTP desde nuestra aplicación backend hacia la aplicación cliente. Spring posee muchas formas para manejar esto, en este caso usaremos <em>ResponseEntity</em> una clase de Spring para manejar el cuerpo y estatus de estas respuestas.  El código fuente completo lo puedes obtener desde el siguiente repositorio <a target="_blank" href="https://bitbucket.org/llabor/backend-apirest-productos/src/master/">Bitbucket</a>  </p>
+<p>Vamos a centrarnos en la clase <em>ProductoController</em> que es en donde vamos a incluir el manejo de las respuestas HTTP.  Primero necesitamos importar la clase <em>ResponseEntity</em>:</p>  
+<pre><code>import org.springframework.http.ResponseEntity;</code></pre>
+</google-codelab-step>
+<google-codelab-step label="GET" duration="15">
+<p>Empezaremos con el servicio que ya tenemos hecho para enviar un producto por su ID, y lo modificaremos para que devuelva el código HTTP 404 si no existe ese producto. En caso contrario, enviaremos el producto solicitado. Para ello lo que haremos es sustituir el tipo que devuelve el método getProductoId por ResponseEntity: </p>
+<pre><code>
+@GetMapping(&#34;/productos/{id}&#34;)
+public ResponseEntity getProductoId(@PathVariable int id) {
+  ProductoModel pr = productService.getProducto(id);
+    if (pr == null) {
+      return new ResponseEntity&lt;&gt;(&#34;Producto no encontrado.&#34;, HttpStatus.NOT_FOUND);
+    }
+    return ResponseEntity.ok(pr);
+  }
+</code></pre>
+</google-codelab-step>
+<google-codelab-step label="POST" duration="20">
+<p>Procederemos ahora a hacer lo suyo con el resto de servicios y empezaremos con el método POST por ejemplo:</p>
+<pre><code>
+@PostMapping(&#34;/productos&#34;)
+public ResponseEntity&lt;String&gt; addProducto(@RequestBody ProductoModel productoModel) {
+  productService.addProducto(productoModel);
+  return new ResponseEntity&lt;&gt;(&#34;Product created successfully!&#34;, HttpStatus.CREATED);
+}
+</code></pre><br>  
+<p>En este caso, enviaremos como respuesta la confirmación de la creación del recurso mediante el código HTTP 201 (HttpStatus.CREATED).</p>
+</google-codelab-step>
+<google-codelab-step label="PUT" duration="20">
+<p>Para la operación PUT enviaremos un 200 OK (HttpStatus.OK) si el producto a actualizar existe y un 404 Not Found en caso contrario.</p>
+<pre><code>
+@PutMapping(&#34;/productos/{id}&#34;)
+public ResponseEntity updateProducto(@PathVariable int id,
+        @RequestBody ProductoModel productToUpdate) {
+  ProductoModel pr = productService.getProducto(id);
+  if (pr == null) {
+    return new ResponseEntity&lt;&gt;(&#34;Producto no encontrado.&#34;, HttpStatus.NOT_FOUND);
+  }
+  productService.updateProducto(id-1, productToUpdate);
+  return new ResponseEntity&lt;&gt;(&#34;Producto actualizado correctamente.&#34;, HttpStatus.OK); // Buenas prácticas dicen que mejor enviar 204 No Content
+  }
+</code></pre>
+</google-codelab-step>
+<google-codelab-step label="DELETE" duration="20">
+<p>En el método DELETE enviaremos el estado 200 genérico para respuestas exitosas o si queremos afinar un poco más el código 204 No Content (HttpStatus.NO_CONTENT):</p>  
+<pre><code>
+DeleteMapping(&#34;/productos/{id}&#34;)
+public ResponseEntity deleteProducto(@PathVariable Integer id) {
+  ProductoModel pr = productService.getProducto(id);
+  if(pr == null) {
+    return new ResponseEntity&lt;&gt;(&#34;Producto no encontrado.&#34;, HttpStatus.NOT_FOUND);
+  }
+  productService.removeProducto(id - 1);
+  return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT); // status code 204-No Content
+}
+</code></pre>
+</google-codelab-step>
+<google-codelab-step label="PATCH" duration="20">
+<p>PATCH</p>
+<pre><code>
+@PatchMapping(&#34;/productos/{id}&#34;)
+public ResponseEntity patchPrecioProducto(
+  @RequestBody ProductoPrecioOnly productoPrecioOnly, @PathVariable int id){
+    ProductoModel pr = productService.getProducto(id);
+    if (pr == null) {
+      return new ResponseEntity&lt;&gt;(&#34;Producto no encontrado.&#34;, HttpStatus.NOT_FOUND);
+    }
+    pr.setPrecio(productoPrecioOnly.getPrecio());
+    productService.updateProducto(id-1, pr);
+    return new ResponseEntity&lt;&gt;(pr, HttpStatus.OK);
+  }
+</code></pre>
+</google-codelab-step>
+<google-codelab-step label="GET subrecurso" duration="20">
+<p>GET subrecurso</p>  
+<pre><code>
+@GetMapping(&#34;/productos/{id}/users&#34;)
+public ResponseEntity getProductIdUsers(@PathVariable int id){
+  ProductoModel pr = productService.getProducto(id);
+  if (pr == null) {
+    return new ResponseEntity&lt;&gt;(&#34;Producto no encontrado.&#34;, HttpStatus.NOT_FOUND);
+  }
+  if (pr.getUsers()!=null)
+    return ResponseEntity.ok(pr.getUsers());
+  else
+    return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);
+  }
+</code></pre>
+<p>REFERENCIAS:<br>  
+  <a target="_blank" href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">Spring Docs</a>
+  <a target="_blank" href="https://www.baeldung.com/spring-response-entity">Response Entity</a>
+</p>
+</google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+  <script src="../../scripts/done.js"></script>
+
+</body>
+</html>

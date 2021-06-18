@@ -1,0 +1,1104 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Ejercicios y retos del Practitioner.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Codelabs">
+  <meta name="application-name" content="Codelabs">
+  <link rel="canonical" href="https://example.com/" />
+  <link rel="preconnect" href="https://www.google-analytics.com" />
+
+  <script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'UA-49880327-14', 'auto');
+    ga('send', 'pageview');
+    
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <title>Codelabs</title>
+
+  <link rel="stylesheet" href="styles/main.css">
+
+  
+
+  <link rel="import" href="elements/elements.html">
+
+  <style is="custom-style">
+    :root {
+      --paper-tabs-selection-bar-color: currentcolor;
+      --paper-input-container-underline: {
+        display: none;
+      };
+      --paper-input-container-underline-focus: {
+        display: none;
+      };
+    }
+
+    .dropdown-filter {
+      --paper-input-container: {
+        padding: 8px;
+      }
+    }
+  </style>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#455a64">
+  <meta name="apple-mobile-web-app-title" content="Codelabs">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="194x194" href="/images/favicons/favicon-194x194.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#455a64">
+  <meta name="msapplication-TileColor" content="#455a64">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#455a64">
+
+  <meta name="og:type" property="og:type" content="website" />
+  <meta name="og:title" property="og:title" content="Codelabs" />
+  <meta name="og:description" property="og:description" content="Ejercicios y retos del Practitioner." />
+  <meta name="og:url" property="og:url" content="https://example.com/" />
+  <meta name="og:site_name" property="og:site_name" content="Codelabs" />
+  <meta name="og:determiner" property="og:determiner" content="the" />
+  <meta name="og:locale" property="og:locale" content="en_US" />
+  <meta name="og:image" property="og:image" content="/images/og-image.png" />
+  <meta name="og:image:url" property="og:image:url" content="/images/og-image.png" />
+  <meta name="og:image:type" property="og:image:type" content="image/png" />
+  <meta name="og:image:width" property="og:image:width" content="1200" />
+  <meta name="og:image:height" property="og:image:height" content="1200" />
+  <meta name="og:image:alt" property="og:image:alt" content="Codelabs" />
+
+  <meta name="twitter:card" property="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" property="twitter:title" content="Codelabs" />
+  <meta name="twitter:description" property="twitter:description" content="Ejercicios y retos del Practitioner." />
+  <meta name="twitter:image" property="twitter:image" content="/images/og-image.png" />
+  <meta name="twitter:url" property="twitter:url" content="https://example.com/" />
+</head>
+
+<body id="app" is="body-bind" class="loading fullbleed ">
+  <paper-header-panel id="main" mode="standard" main>
+    
+    <div id="mainToolbar" class="paper-header">
+      <div class="site-width layout horizontal">
+        <a href="/practitioner">
+          <img src="images/logo.png" class="logo-devs" alt="Codelabs Logo">
+        </a>
+        <!--<div id="searchbar">
+          <paper-input-container no-label-float>
+            <paper-icon-button prefix icon="search"></paper-icon-button>
+            <label>Search</label>
+            <input is="iron-input" bind-value="{{searchVal}}" on-keydown="onSearchKeyDown">
+          </paper-input-container>
+        </div>-->
+      </div>
+    </div>
+    
+
+    
+    <header id="banner" down$="[[_toBoolean(selectedFilter)]]">
+      <div class="site-width">
+        
+        <h2 class="banner-title">¡Practitioner Codelabs!</h2>
+        <div class="banner-description"
+             data-filter-selected$="[[_toBoolean(selectedFilter)]]">
+          <p class="banner-info">
+            A continuación encontrarás diferentes codelabs que te ayudarán a entender los conceptos vistos en los diferentes programas formativos de BBVA Tech University!
+            Busca el Codelab que te interesa y pulsa Start para iniciarlo.
+          </p>
+          <p class="banner-info">
+            <button class="front"><a href="#front">FRONT</a></button>
+            <button class="back"><a href="#back">BACK</a></button>
+          </p>
+          </div>
+      </div>
+    </header>
+
+    <main>
+      
+      <div id="filters" class="site-width layout horizontal center justified">
+        <!--
+        <div id="sortby">
+          <paper-tabs selected="0" noink on-iron-activate="sortBy">
+            <paper-tab>A-Z</paper-tab>
+            <paper-tab>Recent</paper-tab>
+            <paper-tab>Duration</paper-tab>
+          </paper-tabs>
+        </div>
+            -->
+
+    </div>
+
+<div class="site-width layout horizontal center">
+  <h3 id="front">Practitioner Front-End</h3>
+</div>
+<div class="site-width layout horizontal center">
+  <h4>Entregables</h4>
+</div>
+      <card-sorter id="cards" class="site-width">
+        
+        <a href="codelabs\FRONT00\index.html?index=..%2F..index" on-tap="navigate"
+        class="codelab-card category-litelement"
+        data-category="litelement"
+        data-title="FRONT00 - Preparación de los ejercicios entregables"
+        data-duration="20"
+        data-updated="2020-09-28T09:02:48+02:00"
+        data-tags="front"
+        data-pin="">
+       <div class="description">FRONT00 - Preparación de los ejercicios entregables</div>
+       <div class="card-duration">
+         <span>20 min </span>
+         <span>Updated Sep 28, 2020</span>
+       </div>
+       <div class="card-footer">
+         <div class="category-icon litelement-icon"></div>
+         <paper-button class="litelement-bg">Start</paper-button>
+       </div>
+     </a>
+   
+   
+     
+     <a href="codelabs\FRONT01\index.html?index=..%2F..index" on-tap="navigate"
+        class="codelab-card category-litelement"
+        data-category="litelement"
+        data-title="FRONT01 - Eventos en Persona App - Borrar una persona del listado"
+        data-duration="45"
+        data-updated="2020-09-28T12:17:45+02:00"
+        data-tags="front"
+        data-pin="">
+       <div class="description">FRONT01 - Eventos en Persona App - Borrar una persona del listado</div>
+       <div class="card-duration">
+         <span>45 min </span>
+         <span>Updated Sep 28, 2020</span>
+       </div>
+       <div class="card-footer">
+         <div class="category-icon litelement-icon"></div>
+         <paper-button class="litelement-bg">Start</paper-button>
+       </div>
+     </a>
+   
+   
+     
+     <a href="codelabs\FRONT02\index.html?index=..%2F..index" on-tap="navigate"
+        class="codelab-card category-litelement"
+        data-category="litelement"
+        data-title="FRONT02 - Eventos en Persona App - Añadir una persona al listado"
+        data-duration="90"
+        data-updated="2020-09-28T18:47:12+02:00"
+        data-tags="front"
+        data-pin="">
+       <div class="description">FRONT02 - Eventos en Persona App - Añadir una persona al listado</div>
+       <div class="card-duration">
+         <span>90 min </span>
+         <span>Updated Sep 28, 2020</span>
+       </div>
+       <div class="card-footer">
+         <div class="category-icon litelement-icon"></div>
+         <paper-button class="litelement-bg">Start</paper-button>
+       </div>
+     </a>
+
+      </card-sorter>
+      <div class="site-width layout horizontal center">
+        <h4>Auxiliares</h4>
+      </div>  
+      <card-sorter id="cards" class="site-width">
+        <a href="codelabs\DVEX01\index.html?index=..%2F..index" on-tap="navigate"
+        class="codelab-card category-devops"
+        data-category="devops"
+        data-title="DVEX01 - Crear cuenta Bitbucket y repositorio remoto"
+        data-duration="10"
+        data-updated="2020-09-13T12:25:56+02:00"
+        data-tags="back,front"
+        data-pin="">
+       <div class="description">DVEX01 - Crear cuenta Bitbucket y repositorio remoto</div>
+       <div class="card-duration">
+         <span>10 min </span>
+         <span>Updated Sep 13, 2020</span>
+       </div>
+       <div class="card-footer">
+         <div class="category-icon devops-icon"></div>
+         <paper-button class="devops-bg">Start</paper-button>
+       </div>
+     </a>
+   
+   
+     
+     <a href="codelabs\DVEX02\index.html?index=..%2F..index" on-tap="navigate"
+        class="codelab-card category-devops"
+        data-category="devops"
+        data-title="DVEX02 - Crear repositorio Git local y subirlo a BitBucket"
+        data-duration="10"
+        data-updated="2020-09-13T12:30:56+02:00"
+        data-tags="back,front"
+        data-pin="">
+       <div class="description">DVEX02 - Crear repositorio Git local y subirlo a BitBucket</div>
+       <div class="card-duration">
+         <span>10 min </span>
+         <span>Updated Sep 13, 2020</span>
+       </div>
+       <div class="card-footer">
+         <div class="category-icon devops-icon"></div>
+         <paper-button class="devops-bg">Start</paper-button>
+       </div>
+     </a>
+   
+   
+     
+     <a href="codelabs\DVEX03\index.html?index=..%2F..index" on-tap="navigate"
+        class="codelab-card category-devops"
+        data-category="devops"
+        data-title="DVEX03 - Clonar repositorio Git esqueleto y mover a repositorio propio"
+        data-duration="10"
+        data-updated="2020-09-13T12:29:48+02:00"
+        data-tags="back,front"
+        data-pin="">
+       <div class="description">DVEX03 - Clonar repositorio Git esqueleto y mover a repositorio propio</div>
+       <div class="card-duration">
+         <span>10 min </span>
+         <span>Updated Sep 13, 2020</span>
+       </div>
+       <div class="card-footer">
+         <div class="category-icon devops-icon"></div>
+         <paper-button class="devops-bg">Start</paper-button>
+       </div>
+     </a>
+
+     <a href="codelabs\DVEX05\index.html?index=..%2F..index" on-tap="navigate"
+            class="codelab-card category-devops"
+            data-category="devops"
+            data-title="DVEX05 - Docker: Building container images"
+            data-duration="45"
+            data-updated="2020-09-30T12:25:56+02:00"
+            data-tags="back,front"
+            data-pin="">
+           <div class="description">DVEX05 - Docker: Building container images</div>
+           <div class="card-duration">
+             <span>45 min </span>
+             <span>Updated Sep 30, 2020</span>
+           </div>
+           <div class="card-footer">
+             <div class="category-icon devops-icon"></div>
+             <paper-button class="devops-bg">Start</paper-button>
+           </div>
+         </a>
+
+     <a href="codelabs\HTEX01\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-html"
+               data-category="html"
+               data-title="HTEX01 - Formulario con etiquetas HTML5 - placeholder, required"
+               data-duration="30"
+               data-updated="2020-09-13T14:58:57+02:00"
+               data-tags="front"
+               data-pin="">
+              <div class="description">HTEX01 - Formulario con etiquetas HTML5 - placeholder, required</div>
+              <div class="card-duration">
+                <span>30 min </span>
+                <span>Updated Sep 13, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon html-icon"></div>
+                <paper-button class="html-bg">Start</paper-button>
+              </div>
+            </a>
+          
+          
+            
+            <a href="codelabs\HTEX02\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-html"
+               data-category="html"
+               data-title="HTEX02 - Adición de estilos a formulario elaborado en HTEX01"
+               data-duration="15"
+               data-updated="2020-09-13T14:40:18+02:00"
+               data-tags="front"
+               data-pin="">
+              <div class="description">HTEX02 - Adición de estilos a formulario elaborado en HTEX01</div>
+              <div class="card-duration">
+                <span>15 min </span>
+                <span>Updated Sep 13, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon html-icon"></div>
+                <paper-button class="html-bg">Start</paper-button>
+              </div>
+            </a>
+          
+          
+            
+            <a href="codelabs\HTEX03\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-html"
+               data-category="html"
+               data-title="HTEX03 - Recogida de datos de formulario"
+               data-duration="60"
+               data-updated="2020-09-13T14:40:55+02:00"
+               data-tags="front"
+               data-pin="">
+              <div class="description">HTEX03 - Recogida de datos de formulario</div>
+              <div class="card-duration">
+                <span>60 min </span>
+                <span>Updated Sep 13, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon html-icon"></div>
+                <paper-button class="html-bg">Start</paper-button>
+              </div>
+            </a>
+          
+          
+            
+          
+          
+            
+            <a href="codelabs\LTEX01\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-litelement"
+               data-category="litelement"
+               data-title="LTEX01 - Validación Node.js, npm"
+               data-duration="5"
+               data-updated="2020-09-13T14:43:47+02:00"
+               data-tags="front"
+               data-pin="">
+              <div class="description">LTEX01 - Validación Node.js, npm</div>
+              <div class="card-duration">
+                <span>5 min </span>
+                <span>Updated Sep 13, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon litelement-icon"></div>
+                <paper-button class="litelement-bg">Start</paper-button>
+              </div>
+            </a>
+          
+          
+            
+            <a href="codelabs\LTEX02\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-litelement"
+               data-category="litelement"
+               data-title="LTEX02 - Instalación del proyecto base"
+               data-duration="30"
+               data-updated="2020-10-21T14:44:17+02:00"
+               data-tags="front"
+               data-pin="">
+              <div class="description">LTEX02 - Instalación del proyecto base</div>
+              <div class="card-duration">
+                <span>30 min </span>
+                <span>Updated Oct 21, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon litelement-icon"></div>
+                <paper-button class="litelement-bg">Start</paper-button>
+              </div>
+            </a>
+          
+          
+            
+            <a href="codelabs\LTEX03\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-litelement"
+               data-category="litelement"
+               data-title="LTEX03 - Creación del primer componente Hola Mundo"
+               data-duration="40"
+               data-updated="2020-10-21T14:44:56+02:00"
+               data-tags="front"
+               data-pin="">
+              <div class="description">LTEX03 - Creación del primer componente Hola Mundo</div>
+              <div class="card-duration">
+                <span>40 min </span>
+                <span>Updated Oct 21, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon litelement-icon"></div>
+                <paper-button class="litelement-bg">Start</paper-button>
+              </div>
+            </a>
+
+            <a href="codelabs\LTEX04\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-litelement"
+               data-category="litelement"
+               data-title="LTEX04 - Ficha persona"
+               data-duration="40"
+               data-updated="2020-09-13T14:44:56+02:00"
+               data-tags="front"
+               data-pin="">
+              <div class="description">LTEX04 - Ficha Persona</div>
+              <div class="card-duration">
+                <span>45 min </span>
+                <span>Updated Sep 30, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon litelement-icon"></div>
+                <paper-button class="litelement-bg">Start</paper-button>
+              </div>
+            </a>
+
+             <a href="codelabs\LTEX05\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-litelement"
+               data-category="litelement"
+               data-title="LTEX05 - Data Binding en ficha persona"
+               data-duration="40"
+               data-updated="2020-09-13T14:44:56+02:00"
+               data-tags="front"
+               data-pin="">
+              <div class="description">LTEX05 - Data Binding en ficha persona</div>
+              <div class="card-duration">
+                <span>25 min </span>
+                <span>Updated Sep 30, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon litelement-icon"></div>
+                <paper-button class="litelement-bg">Start</paper-button>
+              </div>
+            </a>
+
+            <a href="codelabs\LTEX06\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-litelement"
+               data-category="litelement"
+               data-title="LTEX06 - Prueba updated en propiedades"
+               data-duration="10"
+               data-updated="2020-09-30T14:44:56+02:00"
+               data-tags="front"
+               data-pin="">
+              <div class="description">LTEX06 - Prueba updated en propiedades</div>
+              <div class="card-duration">
+                <span>10 min </span>
+                <span>Updated Sep 30, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon litelement-icon"></div>
+                <paper-button class="litelement-bg">Start</paper-button>
+              </div>
+            </a>
+
+             <a href="codelabs\LTEX07\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-litelement"
+               data-category="litelement"
+               data-title="LTEX07 - Prueba evento y función manejadora"
+               data-duration="15"
+               data-updated="2020-09-30T14:44:56+02:00"
+               data-tags="front"
+               data-pin="">
+              <div class="description">LTEX07 - Prueba evento y función manejadora</div>
+              <div class="card-duration">
+                <span>15 min </span>
+                <span>Updated Sep 30, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon litelement-icon"></div>
+                <paper-button class="litelement-bg">Start</paper-button>
+              </div>
+            </a>
+
+            <a href="codelabs\LTEX08\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-litelement"
+               data-category="litelement"
+               data-title="LTEX08 - Propiedad personInfo"
+               data-duration="15"
+               data-updated="2020-09-30T14:44:56+02:00"
+               data-tags="front"
+               data-pin="">
+              <div class="description">LTEX08 - Propiedad personInfo</div>
+              <div class="card-duration">
+                <span>45 min </span>
+                <span>Updated Sep 30, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon litelement-icon"></div>
+                <paper-button class="litelement-bg">Start</paper-button>
+              </div>
+            </a>
+          
+
+      </card-sorter>
+      <div class="site-width layout horizontal center">
+        <h3 id="back">Practitioner Back-End</h3>
+      </div>
+      <div class="site-width layout horizontal center">
+        <h4>Entregables</h4>
+      </div>
+      <card-sorter id="cards" class="site-width">
+        <a href="codelabs\BACK01\index.html?index=..%2F..index" on-tap="navigate"
+        class="codelab-card category-api"
+        data-category="api"
+        data-title="BACK01 - API REST con integración de métodos GET, POST, PUT, DELETE y PATCH y control de respuestas HTTP"
+        data-duration="100"
+        data-updated="2020-11-02T18:47:12+02:00"
+        data-tags="back"
+        data-pin="">
+       <div class="description">BACK01 - API REST con integración de métodos GET, POST, PUT, DELETE y PATCH y control de respuestas HTTP</div>
+       <div class="card-duration">
+         <span>100 min </span>
+         <span>Updated Nov 2, 2020</span>
+       </div>
+       <div class="card-footer">
+         <div class="category-icon api-icon"></div>
+         <paper-button class="api-bg">Start</paper-button>
+       </div>
+     </a>
+        <a href="codelabs\BACK02\index.html?index=..%2F..index" on-tap="navigate"
+        class="codelab-card category-api"
+        data-category="api"
+        data-title="BACK02 - Integración operaciones CRUD en MongoDB - API REST"
+        data-duration="100"
+        data-updated="2020-10-02T18:47:12+02:00"
+        data-tags="back"
+        data-pin="">
+       <div class="description">BACK02 - Integración operaciones CRUD en MongoDB - API REST</div>
+       <div class="card-duration">
+         <span>100 min </span>
+         <span>Updated Nov 2, 2020</span>
+       </div>
+       <div class="card-footer">
+         <div class="category-icon api-icon"></div>
+         <paper-button class="api-bg">Start</paper-button>
+       </div>
+     </a>
+      </card-sorter>       
+      <div class="site-width layout horizontal center">
+        <h4>Auxiliares</h4>
+      </div>   
+      <card-sorter id="cards" class="site-width">
+        <a href="codelabs\GPEX01\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-proyectos"
+               data-category="proyectos"
+               data-title="GPEX01 - Crear nuestro primer proyecto Maven con IntelliJ IDEA"
+               data-duration="20"
+               data-updated="2020-11-02T15:46:30+02:00"
+               data-tags="back"
+               data-pin="">
+              <div class="description">GPEX01 - Crear nuestro primer proyecto Maven con IntelliJ IDEA</div>
+              <div class="card-duration">
+                <span>20 min </span>
+                <span>Updated Nov 2, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon proyectos-icon"></div>
+                <paper-button class="proyectos-bg">Start</paper-button>
+              </div>
+            </a>
+
+        <a href="codelabs\APIEX01\index.html?index=..%2F..index" on-tap="navigate"
+        class="codelab-card category-api"
+        data-category="api"
+        data-title="APIEX01 - Diseñar y modelar una API REST con RAML"
+        data-duration="110"
+        data-updated="2020-11-02T15:44:59+02:00"
+        data-tags="back"
+        data-pin="">
+       <div class="description">APIEX01 - Diseñar y modelar una API REST con RAML</div>
+       <div class="card-duration">
+         <span>110 min </span>
+         <span>Updated Nov, 2, 2020</span>
+       </div>
+       <div class="card-footer">
+         <div class="category-icon api-icon"></div>
+         <paper-button class="api-bg">Start</paper-button>
+       </div>
+     </a>
+         
+            <a href="codelabs\APIEX02\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-api"
+               data-category="api"
+               data-title="APIEX02 - Hola Mundo Spring Boot"
+               data-duration="15"
+               data-updated="2020-09-13T15:44:59+02:00"
+               data-tags="back"
+               data-pin="">
+              <div class="description">APIEX02 - Hola Mundo Spring Boot</div>
+              <div class="card-duration">
+                <span>15 min </span>
+                <span>Updated Sep 13, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon api-icon"></div>
+                <paper-button class="api-bg">Start</paper-button>
+              </div>
+            </a>
+          
+          
+            
+            <a href="codelabs\APIEX03\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-api"
+               data-category="api"
+               data-title="APIEX03 - Implementar Hola Mundo API REST"
+               data-duration="45"
+               data-updated="2020-09-13T15:45:01+02:00"
+               data-tags="back"
+               data-pin="">
+              <div class="description">APIEX03 - Implementar Hola Mundo API REST</div>
+              <div class="card-duration">
+                <span>45 min </span>
+                <span>Updated Sep 13, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon api-icon"></div>
+                <paper-button class="api-bg">Start</paper-button>
+              </div>
+            </a>
+          
+          
+            
+            <a href="codelabs\APIEX04\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-api"
+               data-category="api"
+               data-title="APIEX04 - GET (con y sin parámetros)"
+               data-duration="45"
+               data-updated="2020-09-13T15:45:37+02:00"
+               data-tags="back"
+               data-pin="">
+              <div class="description">APIEX04 - GET (con y sin parámetros)</div>
+              <div class="card-duration">
+                <span>45 min </span>
+                <span>Updated Sep 13, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon api-icon"></div>
+                <paper-button class="api-bg">Start</paper-button>
+              </div>
+            </a>
+
+            <a href="codelabs\APIEX05\index.html?index=..%2F..index" on-tap="navigate"
+            class="codelab-card category-api"
+            data-category="api"
+            data-title="APIEX05 - Práctica GET (con variable en la URI) en Postman"
+            data-duration="25"
+            data-updated="2020-09-30T15:45:37+02:00"
+            data-tags="back"
+            data-pin="">
+           <div class="description">APIEX05 - Práctica GET (con variable en la URI) en Postman</div>
+           <div class="card-duration">
+             <span>25 min </span>
+             <span>Updated Sep 30, 2020</span>
+           </div>
+           <div class="card-footer">
+             <div class="category-icon api-icon"></div>
+             <paper-button class="api-bg">Start</paper-button>
+           </div>
+         </a>
+
+         <a href="codelabs\APIEX06\index.html?index=..%2F..index" on-tap="navigate"
+            class="codelab-card category-api"
+            data-category="api"
+            data-title="APIEX06 - Práctica GET (con variable en la URI) en Postman"
+            data-duration="25"
+            data-updated="2020-09-30T15:45:37+02:00"
+            data-tags="back"
+            data-pin="">
+           <div class="description">APIEX06 - POST (con y sin parámetros)</div>
+           <div class="card-duration">
+             <span>25 min </span>
+             <span>Updated Sep 30, 2020</span>
+           </div>
+           <div class="card-footer">
+             <div class="category-icon api-icon"></div>
+             <paper-button class="api-bg">Start</paper-button>
+           </div>
+         </a>
+
+         <a href="codelabs\APIEX07\index.html?index=..%2F..index" on-tap="navigate"
+            class="codelab-card category-api"
+            data-category="api"
+            data-title="APIEX07 - PUT (con y sin parámetros)"
+            data-duration="25"
+            data-updated="2020-09-30T15:45:37+02:00"
+            data-tags="back"
+            data-pin="">
+           <div class="description">APIEX07 - PUT (con y sin parámetros)</div>
+           <div class="card-duration">
+             <span>25 min </span>
+             <span>Updated Sep 30, 2020</span>
+           </div>
+           <div class="card-footer">
+             <div class="category-icon api-icon"></div>
+             <paper-button class="api-bg">Start</paper-button>
+           </div>
+         </a>
+
+          <a href="codelabs\APIEX08\index.html?index=..%2F..index" on-tap="navigate"
+            class="codelab-card category-api"
+            data-category="api"
+            data-title="APIEX08 - DELETE (con y sin parámetros)"
+            data-duration="25"
+            data-updated="2020-11-02T15:45:37+02:00"
+            data-tags="back"
+            data-pin="">
+           <div class="description">APIEX08 - DELETE (con y sin parámetros)</div>
+           <div class="card-duration">
+             <span>25 min </span>
+             <span>Updated Nov 2, 2020</span>
+           </div>
+           <div class="card-footer">
+             <div class="category-icon api-icon"></div>
+             <paper-button class="api-bg">Start</paper-button>
+           </div>
+         </a>
+
+         <a href="codelabs\APIEX09\index.html?index=..%2F..index" on-tap="navigate"
+            class="codelab-card category-api"
+            data-category="api"
+            data-title="APIEX09 - PATCH"
+            data-duration="25"
+            data-updated="2020-11-02T15:45:37+02:00"
+            data-tags="back"
+            data-pin="">
+           <div class="description">APIEX09 - PATCH</div>
+           <div class="card-duration">
+             <span>25 min </span>
+             <span>Updated Nov 2, 2020</span>
+           </div>
+           <div class="card-footer">
+             <div class="category-icon api-icon"></div>
+             <paper-button class="api-bg">Start</paper-button>
+           </div>
+         </a>
+
+          <a href="codelabs\APIEX10\index.html?index=..%2F..index" on-tap="navigate"
+            class="codelab-card category-api"
+            data-category="api"
+            data-title="APIEX10 - Diseñar e implementar sub-recursos"
+            data-duration="25"
+            data-updated="2020-11-02T15:45:37+02:00"
+            data-tags="back"
+            data-pin="">
+           <div class="description">APIEX10 - Diseñar e implementar sub-recursos</div>
+           <div class="card-duration">
+             <span>25 min </span>
+             <span>Updated Nov 2, 2020</span>
+           </div>
+           <div class="card-footer">
+             <div class="category-icon api-icon"></div>
+             <paper-button class="api-bg">Start</paper-button>
+           </div>
+         </a>
+
+
+         <a href="codelabs\APIEX11\index.html?index=..%2F..index" on-tap="navigate"
+         class="codelab-card category-api"
+         data-category="api"
+         data-title="APIEX11 - Seguridad Autenticación API REST basada en tokens con Spring y JWT"
+         data-duration="60"
+         data-updated="2020-11-02T15:45:37+02:00"
+         data-tags="back"
+         data-pin="">
+        <div class="description">APIEX11 - Seguridad Autenticación API REST basada en tokens con Spring y JWT</div>
+        <div class="card-duration">
+          <span>60 min </span>
+          <span>Updated Nov 2, 2020</span>
+        </div>
+        <div class="card-footer">
+          <div class="category-icon api-icon"></div>
+          <paper-button class="api-bg">Start</paper-button>
+        </div>
+      </a>
+
+
+
+         <a href="codelabs\APIEX12\index.html?index=..%2F..index" on-tap="navigate"
+            class="codelab-card category-api"
+            data-category="api"
+            data-title="APIEX12 - Servicio REST con Spring y anotación CrossOrigin"
+            data-duration="60"
+            data-updated="2020-11-02T15:45:37+02:00"
+            data-tags="back"
+            data-pin="">
+           <div class="description">APIEX12 - Servicio REST con Spring y anotación CrossOrigin</div>
+           <div class="card-duration">
+             <span>30 min </span>
+             <span>Updated Nov 2, 2020</span>
+           </div>
+           <div class="card-footer">
+             <div class="category-icon api-icon"></div>
+             <paper-button class="api-bg">Start</paper-button>
+           </div>
+         </a>
+
+         <a href="codelabs\APIEX13\index.html?index=..%2F..index" on-tap="navigate"
+            class="codelab-card category-api"
+            data-category="api"
+            data-title="APIEX13 - Documentación de nuestra API (Swagger + Swagger UI Tool)**"
+            data-duration="60"
+            data-updated="2020-11-02T15:45:37+02:00"
+            data-tags="back"
+            data-pin="">
+           <div class="description">APIEX13 - Documentación de nuestra API (Swagger + Swagger UI Tool)</div>
+           <div class="card-duration">
+             <span>30 min </span>
+             <span>Updated Nov 2, 2020</span>
+           </div>
+           <div class="card-footer">
+             <div class="category-icon api-icon"></div>
+             <paper-button class="api-bg">Start</paper-button>
+           </div>
+         </a>
+          
+          
+          
+            
+            <a href="codelabs\DVEX01\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-devops"
+               data-category="devops"
+               data-title="DVEX01 - Crear cuenta Bitbucket y repositorio remoto"
+               data-duration="10"
+               data-updated="2020-09-13T12:25:56+02:00"
+               data-tags="back,front"
+               data-pin="">
+              <div class="description">DVEX01 - Crear cuenta Bitbucket y repositorio remoto</div>
+              <div class="card-duration">
+                <span>10 min </span>
+                <span>Updated Sep 13, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon devops-icon"></div>
+                <paper-button class="devops-bg">Start</paper-button>
+              </div>
+            </a>
+          
+          
+            
+            <a href="codelabs\DVEX02\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-devops"
+               data-category="devops"
+               data-title="DVEX02 - Crear repositorio Git local y subirlo a BitBucket"
+               data-duration="10"
+               data-updated="2020-09-13T12:30:56+02:00"
+               data-tags="back,front"
+               data-pin="">
+              <div class="description">DVEX02 - Crear repositorio Git local y subirlo a BitBucket</div>
+              <div class="card-duration">
+                <span>10 min </span>
+                <span>Updated Sep 13, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon devops-icon"></div>
+                <paper-button class="devops-bg">Start</paper-button>
+              </div>
+            </a>
+          
+          
+            
+            <a href="codelabs\DVEX03\index.html?index=..%2F..index" on-tap="navigate"
+               class="codelab-card category-devops"
+               data-category="devops"
+               data-title="DVEX03 - Clonar repositorio Git esqueleto y mover a repositorio propio"
+               data-duration="10"
+               data-updated="2020-09-13T12:29:48+02:00"
+               data-tags="back,front"
+               data-pin="">
+              <div class="description">DVEX03 - Clonar repositorio Git esqueleto y mover a repositorio propio</div>
+              <div class="card-duration">
+                <span>10 min </span>
+                <span>Updated Sep 13, 2020</span>
+              </div>
+              <div class="card-footer">
+                <div class="category-icon devops-icon"></div>
+                <paper-button class="devops-bg">Start</paper-button>
+              </div>
+            </a>    
+            
+            <a href="codelabs\DVEX04\index.html?index=..%2F..index" on-tap="navigate"
+            class="codelab-card category-devops"
+            data-category="devops"
+            data-title="DVEX04 - Testing JUnit"
+            data-duration="25"
+            data-updated="2020-09-30T12:25:56+02:00"
+            data-tags="back,front"
+            data-pin="">
+           <div class="description">DVEX04 - Testing JUnit</div>
+           <div class="card-duration">
+             <span>25 min </span>
+             <span>Updated Sep 30, 2020</span>
+           </div>
+           <div class="card-footer">
+             <div class="category-icon devops-icon"></div>
+             <paper-button class="devops-bg">Start</paper-button>
+           </div>
+         </a>
+
+         <a href="codelabs\DVEX05\index.html?index=..%2F..index" on-tap="navigate"
+            class="codelab-card category-devops"
+            data-category="devops"
+            data-title="DVEX05 - Docker: Building container images"
+            data-duration="45"
+            data-updated="2020-09-30T12:25:56+02:00"
+            data-tags="back,front"
+            data-pin="">
+           <div class="description">DVEX05 - Docker: Building container images</div>
+           <div class="card-duration">
+             <span>45 min </span>
+             <span>Updated Sep 30, 2020</span>
+           </div>
+           <div class="card-footer">
+             <div class="category-icon devops-icon"></div>
+             <paper-button class="devops-bg">Start</paper-button>
+           </div>
+         </a>
+
+         <a href="codelabs\CDEX01\index.html?index=..%2F..index" on-tap="navigate"
+            class="codelab-card category-data"
+            data-category="data"
+            data-title="CDEX01 - Sentencias SQL - Oracle SQL Developer"
+            data-duration="60"
+            data-updated="2020-09-30T12:25:56+02:00"
+            data-tags="back"
+            data-pin="">
+           <div class="description">CDEX01 - Sentencias SQL - Oracle SQL Developer</div>
+           <div class="card-duration">
+             <span>60 min </span>
+             <span>Updated Sep 30, 2020</span>
+           </div>
+           <div class="card-footer">
+             <div class="category-icon data-icon"></div>
+             <paper-button class="data-bg">Start</paper-button>
+           </div>
+         </a>
+
+         <a href="codelabs\CDEX02\index.html?index=..%2F..index" on-tap="navigate"
+            class="codelab-card category-data"
+            data-category="data"
+            data-title="CDEX02 - Operaciones CRUD MongoDB"
+            data-duration="60"
+            data-updated="2020-09-30T12:25:56+02:00"
+            data-tags="back"
+            data-pin="">
+           <div class="description">CDEX02 - Operaciones CRUD MongoDB</div>
+           <div class="card-duration">
+             <span>60 min </span>
+             <span>Updated Sep 30, 2020</span>
+           </div>
+           <div class="card-footer">
+             <div class="category-icon data-icon"></div>
+             <paper-button class="data-bg">Start</paper-button>
+           </div>
+         </a>           
+      </card-sorter>
+
+      <div class="site-width layout horizontal center">
+        <h4>Retos</h4>
+      </div>  
+      <card-sorter id="cards" class="site-width">
+        <a href="codelabs\CL01\index.html?index=..%2F..index" on-tap="navigate"
+        class="codelab-card category-devops"
+        data-category="api"
+        data-title="CL01 - API con Oracle Database"
+        data-duration="240"
+        data-updated="2020-11-10T12:25:56+02:00"
+        data-tags="back"
+        data-pin="">
+       <div class="description">CL01 - API con Oracle Database</div>
+       <div class="card-duration">
+         <span>240 min </span>
+         <span>Updated Nov 10, 2020</span>
+       </div>
+       <div class="card-footer">
+         <div class="category-icon devops-icon"></div>
+         <paper-button class="devops-bg">Start</paper-button>
+       </div>
+     </a>
+     <a href="codelabs\CL02\index.html?index=..%2F..index" on-tap="navigate"
+     class="codelab-card category-devops"
+     data-category="devops"
+     data-title="CL02 - JWT avanzado"
+     data-duration="120"
+     data-updated="2020-11-10T12:25:56+02:00"
+     data-tags="back"
+     data-pin="">
+    <div class="description">CL02 - JWT avanzado</div>
+    <div class="card-duration">
+      <span>120 min </span>
+      <span>Updated Nov 10, 2020</span>
+    </div>
+    <div class="card-footer">
+      <div class="category-icon devops-icon"></div>
+      <paper-button class="devops-bg">Start</paper-button>
+    </div>
+  </a>
+  <a href="codelabs\CL03\index.html?index=..%2F..index" on-tap="navigate"
+  class="codelab-card category-api"
+  data-category="api"
+  data-title="CL03 - Docker"
+  data-duration="120"
+  data-updated="2020-11-10T12:25:56+02:00"
+  data-tags="back"
+  data-pin="">
+ <div class="description">CL03 - Docker</div>
+ <div class="card-duration">
+   <span>120 min </span>
+   <span>Updated Nov 10, 2020</span>
+ </div>
+ <div class="card-footer">
+   <div class="category-icon devops-icon"></div>
+   <paper-button class="devops-bg">Start</paper-button>
+ </div>
+</a>
+<a href="codelabs\CL04\index.html?index=..%2F..index" on-tap="navigate"
+class="codelab-card category-api"
+data-category="api"
+data-title="CL04 - Cloud Computing"
+data-duration="120"
+data-updated="2020-11-10T12:25:56+02:00"
+data-tags="back"
+data-pin="">
+<div class="description">CL04 - Cloud Computing</div>
+<div class="card-duration">
+ <span>120 min </span>
+ <span>Updated Nov 10, 2020</span>
+</div>
+<div class="card-footer">
+ <div class="category-icon devops-icon"></div>
+ <paper-button class="devops-bg">Start</paper-button>
+</div>
+</a>
+    </card-sorter>
+
+      <div id="loading-placeholder" class="site-width">
+        Loading Codelabs, please wait...
+      </div>
+    </main>
+
+    <footer id="footer">
+      <div class="footer-wrapper site-width">
+        <div class="link-list">
+          <label>Connect</label>
+          <ul>
+            <li><a href="https://currents.google.com/communities/116589760700423271483">BBVA Tech University - Current Community</a></li>
+          </ul>
+        </div>
+        <div class="link-list">
+          <label>Docs</label>
+          <ul>
+            <li><a href="http://platform.bbva">BBVA Ether Platform</a></li>
+          </ul>
+        </div>
+        <div class="link-list">
+          <label>Developer Info</label>
+          <ul>
+            <li><a href="https://platform.bbva.com/cells/index.html">Cells</a></li>
+            <li><a href="https://platform.bbva.com/en-us/developers/engines/apx-online/index.html">APX Online</a></li>
+            <li><a href="https://platform.bbva.com/en-us/developers/engines/apx-batch/index.html">APX Batch</a></li>
+            <li><a href="https://platform.bbva.com/en-us/developers/engines/dataproc/index.html">Dataproc</a></li>
+            <li><a href="https://platform.bbva.com/en-us/developers/bbva-catalog/apis/index.html">API Catalog</a></li>
+          </ul>
+        </div>
+        <div class="link-list">
+          <label>Explore</label>
+           <ul>
+            <li><a href="http://bbva-techuniversity.appspot.com/">BBVA Tech University website</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+  </paper-header-panel>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>
